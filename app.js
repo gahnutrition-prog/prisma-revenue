@@ -6886,8 +6886,8 @@ function render() {
             : state.view === "strategy" ? renderStrategy(prop)
               : state.view === "billing" ? renderBilling(prop)
                 : state.view === "revenue" ? renderRevenueDiary(prop)
-                  : renderDataImport(prop)}
-      </div>
+: renderCalendar(prop)}
+</div>
       ${renderConfirmModal()}
       ${renderInfoModal()}
     </div>
