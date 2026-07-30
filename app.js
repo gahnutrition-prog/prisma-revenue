@@ -6871,7 +6871,6 @@ function render() {
         <button class="tab tab-strategy ${state.view === "strategy" ? "active" : ""}" data-action="view" data-view="strategy">Strategia</button>
         <button class="tab tab-revenue ${state.view === "revenue" ? "active" : ""}" data-action="view" data-view="revenue">Diario revenue</button>
         <button class="tab tab-billing ${state.view === "billing" ? "active" : ""}" data-action="view" data-view="billing">Fatturazione</button>
-        <button class="tab tab-import ${state.view === "import" ? "active" : ""}" data-action="view" data-view="import">Caricamento dati</button>
       </div>
 
       ${state.view === "calc" ? `<section class="ota-row" style="margin-bottom:12px">
