@@ -6581,54 +6581,6 @@ function renderEmailImportPanel(importProp, importer) {
   `;
 }
 
-function renderDataImport(prop) {
-  const importer = state.importer;
-  const importProp = state.data.find((item) => item.id === importer.propertyId) || prop;
-  const source = propertySourceSystems(importProp.id);
-  const lavilleAvailCount = Object.keys(LV_AVAIL || {}).length;
-  const pinetaAvailCount = Object.keys(PP_AVAIL || {}).length;
-  const selectedRateCount = Object.keys(PMS_RATES[importProp.id] || {}).length;
-  const lastUpload = importer.lastUpload || "Mai";
-  const panel = state.importTab === "availability"
-    ? renderAvailabilityPanel(importProp, importer)
-    : state.importTab === "email"
-      ? renderEmailImportPanel(importProp, importer)
-      : renderRatesPanel(importProp, importer);
-  const warnings = importer.validationWarnings || [];
-  return `
-    <section class="panel workspace-panel import-v2">
-      <div class="import-v2-header">
-        <div>
-          <h2>Aggiornamento Dati</h2>
-          <p>Carica tariffe e prenotazioni da ${escapeHtml(source.importLabel)}. Tutto rimane nel browser.</p>
-        </div>
-        <div class="system-status">
-          <div class="status-pill ${lavilleAvailCount > 0 ? "ok" : "warning"}"><span>La Ville</span><strong>${lavilleAvailCount} date disp.</strong></div>
-          <div class="status-pill ${pinetaAvailCount > 0 ? "ok" : "warning"}"><span>Pineta</span><strong>${pinetaAvailCount} date disp.</strong></div>
-          <div class="status-pill ${selectedRateCount > 0 ? "ok" : "warning"}"><span>Tariffe ${escapeHtml(importProp.label)}</span><strong>${selectedRateCount} date</strong></div>
-          <div class="status-pill info"><span>Ultimo upload</span><strong>${escapeHtml(lastUpload)}</strong></div>
-        </div>
-      </div>
-      ${importer.message ? `<div class="import-message top">${escapeHtml(importer.message)}</div>` : ""}
-      ${warnings.length ? `<div class="import-message" style="border-color:#fca5a5;background:#fff1f2;color:#9f1239">${warnings.slice(0, 6).map((warning) => `⚠ ${escapeHtml(warning)}`).join("<br/>")}</div>` : ""}
-      <div class="import-v2-hotel-selector">
-        <label class="field">
-          <span>Hotel da aggiornare</span>
-          <select data-action="import-field" data-field="propertyId">
-            ${state.data.map((item) => `<option value="${escapeHtml(item.id)}" ${importProp.id === item.id ? "selected" : ""}>${escapeHtml(item.label)}</option>`).join("")}
-          </select>
-        </label>
-      </div>
-      <div class="import-v2-tabs">
-        <button class="tab ${state.importTab === "rates" ? "active" : ""}" data-action="import-tab" data-tab="rates">Tariffe</button>
-        <button class="tab ${state.importTab === "availability" ? "active" : ""}" data-action="import-tab" data-tab="availability">Prenotazioni</button>
-        <button class="tab ${state.importTab === "email" ? "active" : ""}" data-action="import-tab" data-tab="email">Email</button>
-      </div>
-      ${panel}
-    </section>
-  `;
-}
-
 function renderConfirmModal() {
   if (!state.pendingConfirm) return "";
   if (state.pendingConfirm.action === "unlock-import-data") {
