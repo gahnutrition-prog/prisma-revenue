@@ -6533,6 +6533,9 @@ function safeRender(html) {
 }
 
 function render() {
+  // Visione resta nel codice ma non è più accessibile dall’interfaccia.
+  // Esplorazione è la schermata principale di PRISMA.
+  if (state.view === "calendar") state.view = "calc";
   const prop = currentProp();
   const activePromo = getActiveSitePromo(prop);
   const siteWithPromo = siteSellRate(state.sito, activePromo);
@@ -6593,7 +6596,6 @@ function render() {
       </nav>
 
       <div class="view-tabs">
-        <button class="tab tab-vision ${state.view === "calendar" ? "active" : ""}" data-action="view" data-view="calendar">Visione</button>
         <button class="tab tab-explore ${state.view === "calc" ? "active" : ""}" data-action="view" data-view="calc">Esplorazione</button>
         <button class="tab tab-strategy ${state.view === "strategy" ? "active" : ""}" data-action="view" data-view="strategy">Strategia</button>
         <button class="tab tab-revenue ${state.view === "revenue" ? "active" : ""}" data-action="view" data-view="revenue">Diario revenue</button>
